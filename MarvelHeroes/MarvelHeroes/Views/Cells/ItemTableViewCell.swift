@@ -19,7 +19,7 @@ final class ItemTableViewCell: UITableViewCell
 	}()
 
 	private let iconImageView: UIImageView = {
-		let imageView = UIImageView(image: #imageLiteral(resourceName: "placeholder"))
+		let imageView = UIImageView()
 		imageView.contentMode = .scaleAspectFit
 		return imageView
 	}()

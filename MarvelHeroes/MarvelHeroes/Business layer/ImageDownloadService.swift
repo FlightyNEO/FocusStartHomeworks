@@ -9,6 +9,8 @@ import Foundation
 
 typealias ImageDataResult = Result<Data, ServiceError>
 
+private let imageCache = NSCache<NSString, NSData>()
+
 protocol IImageDownloadService
 {
 	func loadImage(from url: URL?, _ completion: @escaping (ImageDataResult) -> Void)
@@ -17,14 +19,14 @@ protocol IImageDownloadService
 final class ImageDownloadService
 {
 
-	init() {
-		let memoryCapacity = 500 * 1024 * 1024
-		let diskCapacity = 500 * 1024 * 1024
-		let imageDataCache = URLCache(memoryCapacity: memoryCapacity,
-									  diskCapacity: diskCapacity,
-									  diskPath: "imagesCache")
-		URLCache.shared = imageDataCache
-	}
+//	init() {
+//		let memoryCapacity = 500 * 1024 * 1024
+//		let diskCapacity = 500 * 1024 * 1024
+//		let imageDataCache = URLCache(memoryCapacity: memoryCapacity,
+//									  diskCapacity: diskCapacity,
+//									  diskPath: "imagesCache")
+//		URLCache.shared = imageDataCache
+//	}
 }
 
 extension ImageDownloadService: IImageDownloadService
@@ -36,8 +38,13 @@ extension ImageDownloadService: IImageDownloadService
 			return
 		}
 
-		let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 5)
-		let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+		if let dataImage = imageCache.object(forKey: url.absoluteString as NSString) as Data? {
+			completion(.success(dataImage))
+			return
+		}
+
+		//let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 5)
+		let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
 
 			if let error = error {
 				completion(.failure(.sessionError(error)))
@@ -56,6 +63,8 @@ extension ImageDownloadService: IImageDownloadService
 				return
 			}
 
+			imageCache.setObject(data as NSData,
+								 forKey: url.absoluteString as NSString)
 			completion(.success(data))
 			return
 		}

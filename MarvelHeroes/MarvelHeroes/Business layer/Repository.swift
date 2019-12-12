@@ -132,18 +132,18 @@ extension ItemsRepository: IComicsRepository
 	private func fetchComics(characterId: String,
 							 _ completion: @escaping ComicsResultCompletion) {
 		networkServise.loadComics(characterID: characterId) { result in
-			self.fetchComics(result: result, completion)
+			self.decodeComics(result: result, completion)
 		}
 	}
 
 	private func fetchComics(creatorId: String,
 							 _ completion: @escaping ComicsResultCompletion) {
 		networkServise.loadComics(creatorID: creatorId) { [weak self] result in
-			self?.fetchComics(result: result, completion)
+			self?.decodeComics(result: result, completion)
 		}
 	}
 
-	private func fetchComics(result: ComicDataWrapperResult,
+	private func decodeComics(result: ComicDataWrapperResult,
 							 _ completion: @escaping ComicsResultCompletion) {
 
 		switch result {
