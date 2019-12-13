@@ -255,7 +255,7 @@ private extension CalculatorViewController
 
 	func actionPerformOperation(_ sender: ButtonView) {
 
-		guard let symbol = CalculatorEngine.Operator(rawValue: sender.title) else {
+		guard let symbol = CalculatorEngine.Operator[sender.title] else {
 			return
 		}
 

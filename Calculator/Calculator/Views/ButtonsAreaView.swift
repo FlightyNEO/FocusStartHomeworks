@@ -19,8 +19,6 @@ final class ButtonsAreaView: UIView
 		grid.rows * grid.columns
 	}
 
-	private var estimateHeight: CGFloat = 0
-
 	// MARK: Initialization
 	init(buttons: [[ButtonView?]],
 		 grid: (rows: Int, columns: Int),
@@ -62,8 +60,8 @@ final class ButtonsAreaView: UIView
 
 					guard let previousButton = previousButton else { continue }
 
-					let size = CGSize(width: previousButton.frame.size.width * 2 + offset,
-									  height: previousButton.frame.size.height)
+					let size = CGSize(width: previousButton.frame.width * 2 + offset,
+									  height: previousButton.frame.height)
 					previousButton.frame = calculateButtonFrame(origin: previousButton.frame.origin, size: size)
 
 					continue

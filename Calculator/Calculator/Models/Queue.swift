@@ -30,8 +30,11 @@ extension Queue: CustomStringConvertible
 	var description: String { "\(queue)" }
 }
 
-extension Queue
+extension Queue: ExpressibleByArrayLiteral
 {
+	init(arrayLiteral elements: Element...) {
+		self.init(elements)
+	}
 	init(_ elements: [Element]) {
 		queue = elements
 	}

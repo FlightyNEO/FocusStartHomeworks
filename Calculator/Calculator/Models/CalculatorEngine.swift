@@ -10,6 +10,7 @@
 
 import Foundation
 
+// swiftlint:disable:next type_body_length
 struct CalculatorEngine
 {
 	/// Операции
@@ -38,7 +39,7 @@ struct CalculatorEngine
 		}
 	}
 
-	enum Operator: String, CustomStringConvertible
+	@dynamicMemberLookup enum Operator: String, CustomStringConvertible
 	{
 		case plus = "+"
 		case minus = "−"
@@ -49,6 +50,14 @@ struct CalculatorEngine
 		case magnitude = "⁺∕₋"
 		case percent = "%"
 		case equals = "="
+
+		static subscript(_ value: String) -> Self? {
+			Self(rawValue: value)
+		}
+
+		static subscript(dynamicMember value: String) -> Self? {
+			Self(rawValue: value)
+		}
 
 		var description: String { rawValue }
 	}
@@ -374,7 +383,7 @@ extension CalculatorEngine.OperationStack: ExpressibleByFloatLiteral
 		if let value = Double(string) {
 			self.init(operand: value)
 		}
-		else if let `operator` = CalculatorEngine.Operator(rawValue: string) {
+		else if let `operator` = CalculatorEngine.Operator[string] {
 			self.init(operator: `operator`)
 		}
 		else {
