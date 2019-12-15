@@ -37,3 +37,10 @@ struct Creator: Codable, IItemViewModel
 	var title: String { fullName }
 	var description: String? { nil }
 }
+
+extension Creator
+{
+	subscript<U>(dynamicMember keyPath: KeyPath<Thumbnail, U>) -> U {
+		thumbnail[keyPath: keyPath]
+	}
+}

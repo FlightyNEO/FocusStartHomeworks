@@ -42,7 +42,7 @@ enum ItemType: String, CaseIterable
 	}
 }
 
-protocol IItemViewModel: Decodable
+@dynamicMemberLookup protocol IItemViewModel: Decodable
 {
 	var id: Int { get }
 	var title: String { get }
@@ -50,4 +50,6 @@ protocol IItemViewModel: Decodable
 	var thumbnail: Thumbnail { get }
 
 	var itemType: ItemType { get }
+
+	subscript<U>(dynamicMember keyPath: KeyPath<Thumbnail, U>) -> U { get }
 }

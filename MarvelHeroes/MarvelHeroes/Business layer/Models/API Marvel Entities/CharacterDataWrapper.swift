@@ -48,3 +48,10 @@ struct Character: Codable, IItemViewModel
 		case description, modified, thumbnail, resourceURI, comics, series, stories, events, urls
 	}
 }
+
+extension Character
+{
+	subscript<U>(dynamicMember keyPath: KeyPath<Thumbnail, U>) -> U {
+		thumbnail[keyPath: keyPath]
+	}
+}

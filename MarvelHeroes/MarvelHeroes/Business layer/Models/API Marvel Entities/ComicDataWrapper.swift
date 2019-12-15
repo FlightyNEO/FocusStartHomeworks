@@ -35,3 +35,10 @@ struct Comic: Codable, IItemViewModel
 	// MARK: Calculated properties
 	var itemType: ItemType { .comic }
 }
+
+extension Comic
+{
+	subscript<U>(dynamicMember keyPath: KeyPath<Thumbnail, U>) -> U {
+		thumbnail[keyPath: keyPath]
+	}
+}
