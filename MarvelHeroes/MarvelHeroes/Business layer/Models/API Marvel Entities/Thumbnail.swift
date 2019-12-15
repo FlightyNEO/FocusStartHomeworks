@@ -9,8 +9,8 @@ import Foundation
 
 struct Thumbnail: Codable
 {
-	let path: String
-	let `extension`: Extension
+	private let path: String
+	private let `extension`: Extension
 }
 
 enum Extension: String, Codable
